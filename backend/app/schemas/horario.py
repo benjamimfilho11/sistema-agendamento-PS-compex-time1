@@ -9,3 +9,10 @@ class HorarioCreate(BaseModel):
     endTime: Time
 
     model_config = ConfigDict(extra="forbid")
+
+class HorarioResponse(BaseModel):
+    id: int
+    date: str
+    startTime: str
+    endTime: str
+    clientId: int | None
