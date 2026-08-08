@@ -241,3 +241,8 @@ __marimo__/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# SQLite
+*.db
+*.sqlite
+*.sqlite3
