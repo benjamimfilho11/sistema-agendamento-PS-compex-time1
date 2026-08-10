@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import DayCell from "./DayCell.tsx";
-import { HOJE, getMonthGrid, toISO } from "@/lib/horarios";
+import { HOJE, getMonthGrid, toISO } from "@/services/horarios.ts";
 import type { Cliente, Horario } from "@/types";
 
 const DIAS_SEMANA = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];

@@ -3,7 +3,7 @@ import MonthCalendar from "@/components/calendar/MonthCalendar";
 import DayScheduleDialog from "@/components/schedule/DayScheduleDialog";
 import { mockClientes, mockHorarios } from "@/data/mockData";
 import type { Horario } from "@/types";
-import { HOJE, toISO } from "@/lib/horarios";
+import { HOJE, toISO } from "@/services/horarios";
 
 export default function HomePage() {
   const [horarios, setHorarios] = useState<Horario[]>(mockHorarios);

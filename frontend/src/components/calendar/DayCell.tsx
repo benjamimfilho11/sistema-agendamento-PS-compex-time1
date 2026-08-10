@@ -1,4 +1,4 @@
-import { clienteNome } from "@/lib/horarios";
+import { clienteNome } from "@/services/horarios";
 import type { Cliente, Horario } from "@/types";
 
 interface DayCellProps {
