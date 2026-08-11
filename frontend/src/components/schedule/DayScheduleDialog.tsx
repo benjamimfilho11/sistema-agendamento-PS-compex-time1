@@ -20,6 +20,7 @@ interface DayScheduleDialogProps {
   clientes: Cliente[];
   onDeletarHorario: (id: number) => void;
   onAtribuirCliente: (id: number, clientId: number | null) => void;
+  onCancelarAgendamento: (id: number) => void;
   onAdicionarHorario: (dados: {
     startTime: string;
     endTime: string;
@@ -35,6 +36,7 @@ export default function DayScheduleDialog({
   clientes,
   onDeletarHorario,
   onAtribuirCliente,
+  onCancelarAgendamento,
   onAdicionarHorario,
 }: DayScheduleDialogProps) {
   const [mostrarForm, setMostrarForm] = useState(false);
@@ -72,6 +74,7 @@ export default function DayScheduleDialog({
               horario={h}
               clientes={clientes}
               onAtribuirCliente={(clientId) => onAtribuirCliente(h.id, clientId)}
+              onCancelar={() => onCancelarAgendamento(h.id)}
               onDeletar={() => onDeletarHorario(h.id)}
             />
           ))}
