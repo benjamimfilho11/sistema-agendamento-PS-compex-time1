@@ -37,3 +37,42 @@ def criar_horario(horario: HorarioCreate):
 
     finally:
         connection.close()
+
+def buscar_horario_por_id(horario_id: int):
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            SELECT id, date, start_time, end_time, client_id
+            FROM horarios
+            WHERE id = ?
+            """,
+            (horario_id,),
+        )
+
+        return cursor.fetchone()
+
+    finally:
+        connection.close()
+
+def deletar_horario(horario_id: int):
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            DELETE FROM horarios
+            WHERE id = ?
+            """,
+            (horario_id,),
+        )
+
+        connection.commit()
+
+    finally:
+        connection.close()
