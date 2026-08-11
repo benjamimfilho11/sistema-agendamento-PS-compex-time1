@@ -1,4 +1,4 @@
-import { Trash2 } from "lucide-react";
+import { Trash2, X} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -14,6 +14,7 @@ interface HorarioListItemProps {
   horario: Horario;
   clientes: Cliente[];
   onAtribuirCliente: (clientId: number | null) => void;
+  onCancelar: () => void;
   onDeletar: () => void;
 }
 
@@ -21,6 +22,7 @@ export default function HorarioListItem({
   horario,
   clientes,
   onAtribuirCliente,
+  onCancelar,
   onDeletar,
 }: HorarioListItemProps) {
   const ocupado = horario.clientId !== null;
@@ -67,7 +69,18 @@ export default function HorarioListItem({
       >
         {ocupado ? "Agendado" : "Livre"}
       </Badge>
-
+    {ocupado && (
+      <Button
+        size="icon"
+        variant="outline"
+        className="h-8 w-8 shrink-0 border-stone-300 text-stone-500 hover:border-red-300 hover:bg-orange-50 hover:text-red-700"
+        aria-label="Cancelar horário"
+        onClick={onCancelar}
+        >
+          <X className="mr-1 h-3.5 w-3.5" />
+          Cancelar
+        </Button>
+    )}
       <Button
         size="icon"
         variant="outline"
