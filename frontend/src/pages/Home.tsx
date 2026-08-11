@@ -33,6 +33,14 @@ export default function HomePage() {
     );
   }
 
+  function handleCancelarAgendamento(id: number) {
+    setHorarios((prev) =>
+      prev.map((h) =>
+        h.id === id ? {...h, clientId: null } : h
+    )
+  );
+  }
+
   function handleAdicionarHorario(dados: {
     startTime: string;
     endTime: string;
@@ -79,6 +87,7 @@ export default function HomePage() {
         onDeletarHorario={handleDeletarHorario}
         onAtribuirCliente={handleAtribuirCliente}
         onAdicionarHorario={handleAdicionarHorario}
+        onCancelarAgendamento={handleCancelarAgendamento}
       />
     </div>
   );
