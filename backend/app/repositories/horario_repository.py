@@ -37,3 +37,26 @@ def criar_horario(horario: HorarioCreate):
 
     finally:
         connection.close()
+
+def agendar_horario(horario_id: int, client_id: int):
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            UPDATE horarios
+            SET client_id = ?
+            WHERE id = ? AND client_id IS NULL
+            """,
+            (client_id, horario_id),
+        )
+
+        connection.commit()
+
+        return cursor.rowcount
+
+    finally:
+        connection.close()
+

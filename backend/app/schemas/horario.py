@@ -1,6 +1,6 @@
 from datetime import date as Date, time as Time
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class HorarioCreate(BaseModel):
@@ -16,3 +16,8 @@ class HorarioResponse(BaseModel):
     startTime: str
     endTime: str
     clientId: int | None
+
+class HorarioAgendar(BaseModel):
+    clientId: int = Field(gt=0)
+
+    model_config = ConfigDict(extra="forbid")
