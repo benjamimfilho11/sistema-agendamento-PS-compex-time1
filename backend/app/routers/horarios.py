@@ -3,7 +3,11 @@ from datetime import datetime
 
 from fastapi import APIRouter, HTTPException, status
 
-from app.repositories.horario_repository import criar_horario
+from app.repositories.horario_repository import (
+    buscar_horario_por_id,
+    criar_horario,
+    deletar_horario,
+)
 from app.schemas.horario import HorarioCreate, HorarioResponse
 
 
@@ -48,3 +52,24 @@ def cadastrar_horario(horario: HorarioCreate):
             status_code=status.HTTP_409_CONFLICT,
             detail="Este horário já foi cadastrado.",
         )
+
+@router.delete(
+    "/{horario_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+)
+def excluir_horario(horario_id: int):
+    horario = buscar_horario_por_id(horario_id)
+
+    if horario is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Horário não encontrado.",
+        )
+
+    if horario["client_id"] is not None:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Não é possível excluir um horário ocupado.",
+        )
+
+    deletar_horario(horario_id)
