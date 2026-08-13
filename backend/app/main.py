@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from app.routers.clientes import router as clientes_router
 from app.routers.horarios import router as horarios_router
 
 
@@ -26,7 +26,7 @@ app.add_middleware(
 
 
 app.include_router(horarios_router)
-
+app.include_router(clientes_router)
 
 @app.get("/api/health")
 def health_check():
