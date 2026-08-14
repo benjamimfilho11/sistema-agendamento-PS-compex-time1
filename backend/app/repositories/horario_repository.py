@@ -106,6 +106,29 @@ def deletar_horario(horario_id: int):
         connection.close()
 
 
+def cancelar_agendamento(horario_id: int):
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            UPDATE horarios
+            SET client_id = NULL
+            WHERE id = ?
+            """,
+            (horario_id,),
+        )
+
+        connection.commit()
+
+        return cursor.rowcount
+
+    finally:
+        connection.close()
+
+
 def agendar_horario(horario_id: int, client_id: int):
     connection = get_connection()
 
@@ -139,6 +162,7 @@ def listar_horarios():
             """
             SELECT id, date, start_time, end_time, client_id
             FROM horarios
+            ORDER BY date ASC, start_time ASC
             """
         )
 
