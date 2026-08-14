@@ -11,7 +11,11 @@ from app.repositories.horario_repository import (
 )
 from app.schemas.horario import HorarioCreate, HorarioResponse
 from app.repositories.cliente_repositorio import buscar_cliente_por_id
-from app.repositories.horario_repository import agendar_horario, listar_horarios
+from app.repositories.horario_repository import (
+    agendar_horario,
+    cancelar_agendamento,
+    listar_horarios,
+)
 from app.schemas.horario import HorarioAgendar
 
 
@@ -106,6 +110,12 @@ def agendar_horario_route(horario_id: int, agendamento: HorarioAgendar):
             detail="Horário não encontrado.",
         )
 
+    if horario["date"] < datetime.now().date().isoformat():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Não é possível agendar um horário em uma data passada.",
+        )
+
     if horario["client_id"] is not None:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
@@ -128,4 +138,34 @@ def agendar_horario_route(horario_id: int, agendamento: HorarioAgendar):
         "startTime": horario["start_time"],
         "endTime": horario["end_time"],
         "clientId": agendamento.clientId,
+    }
+
+
+@router.patch(
+    "/{horario_id}/cancelar",
+    response_model=HorarioResponse,
+)
+def cancelar_horario_route(horario_id: int):
+    horario = buscar_horario_por_id(horario_id)
+
+    if horario is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Horário não encontrado.",
+        )
+
+    if horario["client_id"] is None:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Este horário já está livre.",
+        )
+
+    cancelar_agendamento(horario_id)
+
+    return {
+        "id": horario["id"],
+        "date": horario["date"],
+        "startTime": horario["start_time"],
+        "endTime": horario["end_time"],
+        "clientId": None,
     }
