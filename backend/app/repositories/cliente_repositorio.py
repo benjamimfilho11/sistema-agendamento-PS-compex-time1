@@ -41,3 +41,53 @@ def criar_cliente(cliente: ClienteCreate):
 
     finally:
         connection.close()
+
+
+def listar_clientes():
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            SELECT id, nome, sobrenome, data_nascimento, cpf, telefone
+            FROM clientes
+            """
+        )
+
+        return [
+            {
+                "id": row["id"],
+                "nome": row["nome"],
+                "sobrenome": row["sobrenome"],
+                "datanascimento": row["data_nascimento"],
+                "cpf": row["cpf"],
+                "telefone": row["telefone"],
+            }
+            for row in cursor.fetchall()
+        ]
+
+    finally:
+        connection.close()
+
+
+def buscar_cliente_por_id(cliente_id: int):
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            SELECT id, nome, sobrenome, data_nascimento, cpf, telefone
+            FROM clientes
+            WHERE id = ?
+            """,
+            (cliente_id,),
+        )
+
+        return cursor.fetchone()
+
+    finally:
+        connection.close()
