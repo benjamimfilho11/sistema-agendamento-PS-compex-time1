@@ -3,6 +3,7 @@ import sqlite3
 from fastapi import APIRouter, HTTPException, status
 
 from app.repositories.cliente_repositorio import criar_cliente
+from app.repositories.cliente_repositorio import listar_clientes
 from app.schemas.cliente import ClienteCreate, ClienteResponse
 
 
@@ -26,3 +27,11 @@ def cadastrar_cliente(cliente: ClienteCreate):
             status_code=status.HTTP_409_CONFLICT,
             detail="Este CPF já foi cadastrado.",
         )
+
+
+@router.get(
+    "",
+    response_model=list[ClienteResponse],
+)
+def listar_clientes_route():
+    return listar_clientes()
