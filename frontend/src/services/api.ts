@@ -84,6 +84,13 @@ export function cancelarHorario(id: number) {
   });
 }
 
+export function trocarClienteHorario(id: number, clientId: number | null) {
+  return request<Horario>(`/horarios/${id}/cliente`, {
+    method: "PATCH",
+    body: JSON.stringify({ clientId }),
+  });
+}
+
 export function deletarHorario(id: number) {
   return request<void>(`/horarios/${id}`, { method: "DELETE" });
 }
