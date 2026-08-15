@@ -202,3 +202,37 @@ def listar_horarios():
 
     finally:
         connection.close()
+
+def listar_proximos_agendamentos(data_atual: str, hora_atual: str):
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            SELECT id, date, start_time, end_time, client_id
+            FROM horarios
+            WHERE client_id IS NOT NULL
+              AND (
+                    date > ?
+                    OR (date = ? AND start_time >= ?)
+                  )
+            ORDER BY date ASC, start_time ASC
+            """,
+            (data_atual, data_atual, hora_atual),
+        )
+
+        return [
+            {
+                "id": row["id"],
+                "date": row["date"],
+                "startTime": row["start_time"],
+                "endTime": row["end_time"],
+                "clientId": row["client_id"],
+            }
+            for row in cursor.fetchall()
+        ]
+
+    finally:
+        connection.close()

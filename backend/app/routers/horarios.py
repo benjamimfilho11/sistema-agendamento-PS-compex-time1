@@ -15,6 +15,7 @@ from app.repositories.horario_repository import (
     agendar_horario,
     cancelar_agendamento,
     listar_horarios,
+    listar_proximos_agendamentos,
     trocar_cliente_horario,
 )
 from app.schemas.horario import HorarioAgendar, HorarioTrocarCliente
@@ -209,3 +210,15 @@ def trocar_cliente_horario_route(horario_id: int, dados: HorarioTrocarCliente):
         "endTime": horario["end_time"],
         "clientId": dados.clientId,
     }
+
+@router.get(
+    "/proximos",
+    response_model=list[HorarioResponse],
+)
+def listar_proximos_agendamentos_route():
+    agora = datetime.now()
+
+    return listar_proximos_agendamentos(
+        agora.date().isoformat(),
+        agora.strftime("%H:%M"),
+    )
