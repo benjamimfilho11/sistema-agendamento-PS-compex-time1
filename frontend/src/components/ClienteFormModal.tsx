@@ -67,6 +67,10 @@ export default function ClienteFormModal({
       setErro("Preencha nome e sobrenome.");
       return;
     }
+    if (!form.datanascimento) {
+      setErro("Preencha a data de nascimento.");
+      return;
+    }
     if (unmask(form.cpf).length !== 11) {
       setErro("CPF incompleto — informe os 11 dígitos.");
       return;
