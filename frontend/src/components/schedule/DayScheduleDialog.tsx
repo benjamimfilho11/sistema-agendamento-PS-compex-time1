@@ -24,8 +24,7 @@ interface DayScheduleDialogProps {
   onAdicionarHorario: (dados: {
     startTime: string;
     endTime: string;
-    clientId: number | null;
-  }) => string | void;
+  }) => string | void | Promise<string | void>;
 }
 
 export default function DayScheduleDialog({
@@ -55,9 +54,9 @@ export default function DayScheduleDialog({
         if (!v) setMostrarForm(false);
       }}
     >
-      <DialogContent className="border-stone-300 bg-stone-50 sm:max-w-lg">
+      <DialogContent className="bg-stone-50 sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle className="font-serif capitalize text-stone-800">
+          <DialogTitle className="font-sans capitalize text-stone-800">
             {dataLabel}
           </DialogTitle>
         </DialogHeader>
@@ -82,7 +81,6 @@ export default function DayScheduleDialog({
 
         {mostrarForm ? (
           <NovoHorarioForm
-            clientes={clientes}
             onCancelar={() => setMostrarForm(false)}
             onSalvar={(dados) => {
               const erro = onAdicionarHorario(dados);

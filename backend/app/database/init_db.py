@@ -20,6 +20,19 @@ def init_database():
             """
         )
 
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS clientes (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nome TEXT NOT NULL,
+                sobrenome TEXT NOT NULL,
+                data_nascimento TEXT NOT NULL,
+                cpf TEXT NOT NULL UNIQUE,
+                telefone TEXT NOT NULL
+            )
+            """
+        )
+
         connection.commit()
 
     finally:

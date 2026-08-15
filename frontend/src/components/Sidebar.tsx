@@ -16,7 +16,7 @@ const ROUTES = [
 export default function Sidebar() {
   const path = useLocation().pathname;
   return (
-    <aside className="flex h-screen w-58 min-w-58 flex-col border-r border-stone-300 bg-stone-200 px-4 py-5">
+    <aside className="flex h-full w-58 min-w-58 shrink-0 flex-col overflow-y-auto border-r border-stone-300 bg-stone-200 px-4 py-5">
       <div className="mb-5 flex items-center gap-2.5 border-b border-stone-300 pb-5">
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-amber-800 text-lg font-semibold text-amber-50">
           H

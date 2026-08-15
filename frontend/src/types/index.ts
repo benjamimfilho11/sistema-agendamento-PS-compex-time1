@@ -1,9 +1,10 @@
 export interface Cliente {
   id: number;
-  name: string;
-  email: string;
+  nome: string;
+  sobrenome: string;
+  datanascimento: string; // YYYY-MM-DD
   cpf: string;
-  telefone: number;
+  telefone: string;
 }
 
 export interface Horario {
