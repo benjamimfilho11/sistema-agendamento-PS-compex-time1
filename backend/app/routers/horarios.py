@@ -15,8 +15,9 @@ from app.repositories.horario_repository import (
     agendar_horario,
     cancelar_agendamento,
     listar_horarios,
+    trocar_cliente_horario,
 )
-from app.schemas.horario import HorarioAgendar
+from app.schemas.horario import HorarioAgendar, HorarioTrocarCliente
 
 
 router = APIRouter(
@@ -168,4 +169,43 @@ def cancelar_horario_route(horario_id: int):
         "startTime": horario["start_time"],
         "endTime": horario["end_time"],
         "clientId": None,
+    }
+
+
+@router.patch(
+    "/{horario_id}/cliente",
+    response_model=HorarioResponse,
+)
+def trocar_cliente_horario_route(horario_id: int, dados: HorarioTrocarCliente):
+    horario = buscar_horario_por_id(horario_id)
+
+    if horario is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Horário não encontrado.",
+        )
+
+    if horario["date"] < datetime.now().date().isoformat():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Não é possível alterar o agendamento de um horário em uma data passada.",
+        )
+
+    if dados.clientId is not None:
+        cliente = buscar_cliente_por_id(dados.clientId)
+
+        if cliente is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Cliente não encontrado.",
+            )
+
+    trocar_cliente_horario(horario_id, dados.clientId)
+
+    return {
+        "id": horario["id"],
+        "date": horario["date"],
+        "startTime": horario["start_time"],
+        "endTime": horario["end_time"],
+        "clientId": dados.clientId,
     }

@@ -152,6 +152,29 @@ def agendar_horario(horario_id: int, client_id: int):
         connection.close()
 
 
+def trocar_cliente_horario(horario_id: int, client_id):
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            UPDATE horarios
+            SET client_id = ?
+            WHERE id = ?
+            """,
+            (client_id, horario_id),
+        )
+
+        connection.commit()
+
+        return cursor.rowcount
+
+    finally:
+        connection.close()
+
+
 def listar_horarios():
     connection = get_connection()
 

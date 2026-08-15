@@ -21,3 +21,9 @@ class HorarioAgendar(BaseModel):
     clientId: int = Field(gt=0)
 
     model_config = ConfigDict(extra="forbid")
+
+
+class HorarioTrocarCliente(BaseModel):
+    clientId: int | None = Field(default=None, gt=0)
+
+    model_config = ConfigDict(extra="forbid")
