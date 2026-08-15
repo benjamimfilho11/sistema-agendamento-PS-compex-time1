@@ -28,7 +28,7 @@ def init_database():
                 sobrenome TEXT NOT NULL,
                 data_nascimento TEXT NOT NULL,
                 cpf TEXT NOT NULL UNIQUE,
-                telefone TEXT NOT NULL
+                telefone TEXT NOT NULL UNIQUE
             )
             """
         )
