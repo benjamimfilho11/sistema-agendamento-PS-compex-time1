@@ -42,8 +42,14 @@ export default function HorarioListItem({
         <SelectTrigger className="h-8 flex-1 border-stone-300 bg-stone-50 text-xs">
           <SelectValue placeholder="Cliente">
             {horario.clientId !== null
-              ? clientes.find((cliente) => cliente.id === horario.clientId)
-                  ?.name
+              ? (() => {
+                  const cliente = clientes.find(
+                    (c) => c.id === horario.clientId
+                  );
+                  return cliente
+                    ? `${cliente.nome} ${cliente.sobrenome}`
+                    : "Cliente removido";
+                })()
               : "livre"}
           </SelectValue>
         </SelectTrigger>
@@ -53,7 +59,7 @@ export default function HorarioListItem({
           </SelectItem>
           {clientes.map((c) => (
             <SelectItem key={c.id} value={String(c.id)} className="bg-stone-50">
-              {c.name}
+              {c.nome} {c.sobrenome}
             </SelectItem>
           ))}
         </SelectContent>
