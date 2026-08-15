@@ -27,12 +27,12 @@ export default function DayCell({
     <button
       type="button"
       onClick={onClick}
-      className={`flex min-h-27 flex-col items-start gap-1.5 border-b border-r border-stone-200 p-2 text-left transition-colors hover:bg-amber-50",
+      className={`flex min-h-0 flex-col items-start gap-1.5 overflow-hidden border-b border-r border-stone-200 p-2 text-left transition-colors hover:bg-amber-50",
         ${!isCurrentMonth && "bg-stone-100/70"},
         ${isSelected && "bg-amber-100 hover:bg-amber-100}"}`}
     >
       <span
-        className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-medium
+        className={`flex h-6 w-6 items-center justify-center rounded-full text-sm font-medium
          ${
            isToday
              ? "bg-amber-800 text-amber-50"
@@ -51,7 +51,7 @@ export default function DayCell({
           return (
             <span
               key={h.id}
-              className={`rounded px-1.5 py-0.5 text-[10px] font-medium",
+              className={`rounded px-1.5 py-0.5 text-[11px] font-medium",
                 ${
                   ocupado
                     ? "bg-orange-50 text-orange-700"
@@ -63,7 +63,7 @@ export default function DayCell({
           );
         })}
         {resto > 0 && (
-          <span className="text-[10px] font-medium text-stone-500">
+          <span className="text-[11px] font-medium text-stone-500">
             +{resto} mais
           </span>
         )}

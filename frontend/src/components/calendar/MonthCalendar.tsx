@@ -49,9 +49,9 @@ export default function MonthCalendar({
   const hojeISO = toISO(HOJE);
 
   return (
-    <div className="w-full overflow-hidden rounded-lg border border-stone-300 bg-stone-50 shadow-sm">
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg border border-stone-300 bg-stone-50 shadow-sm">
       <div className="flex items-center justify-between border-b border-stone-200 px-5 py-4">
-        <h2 className="font-serif text-xl font-semibold capitalize text-stone-800">
+        <h2 className="font-sans text-xl font-semibold capitalize text-stone-800">
           {label}
         </h2>
         <div className="flex items-center gap-2">
@@ -90,14 +90,14 @@ export default function MonthCalendar({
         {DIAS_SEMANA.map((d) => (
           <div
             key={d}
-            className="px-2 py-2 text-center font-mono text-[11px] uppercase tracking-wide text-stone-500"
+            className="px-2 py-2 text-center font-mono text-xs uppercase tracking-wide text-stone-500"
           >
             {d}
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-7">
+      <div className="grid flex-1 auto-rows-fr grid-cols-7">
         {dias.map((d) => {
           const iso = toISO(d);
           return (
