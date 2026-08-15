@@ -2,36 +2,24 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
-import type { Cliente } from "@/types";
 
 interface NovoHorarioFormProps {
-  clientes: Cliente[];
   onCancelar: () => void;
-  onSalvar: (dados: {
-    startTime: string;
-    endTime: string;
-    clientId: number | null;
-  }) => string | void;
+  onSalvar: (dados: { startTime: string; endTime: string }) =>
+    | string
+    | void
+    | Promise<string | void>;
 }
 
 export default function NovoHorarioForm({
-  clientes,
   onCancelar,
   onSalvar,
 }: NovoHorarioFormProps) {
   const [inicio, setInicio] = useState("");
   const [fim, setFim] = useState("");
-  const [cliente, setCliente] = useState("livre");
   const [erro, setErro] = useState("");
 
-  function handleSalvar() {
+  async function handleSalvar() {
     if (!inicio || !fim) {
       setErro("Preencha o início e o fim do horário.");
       return;
@@ -40,10 +28,9 @@ export default function NovoHorarioForm({
       setErro("O horário de fim precisa ser depois do início.");
       return;
     }
-    const resultado = onSalvar({
+    const resultado = await onSalvar({
       startTime: inicio,
       endTime: fim,
-      clientId: cliente === "livre" ? null : Number(cliente),
     });
     if (resultado) {
       setErro(resultado);
@@ -51,7 +38,6 @@ export default function NovoHorarioForm({
     }
     setInicio("");
     setFim("");
-    setCliente("livre");
     setErro("");
   }
 
@@ -82,26 +68,6 @@ export default function NovoHorarioForm({
             className="border-stone-300 bg-white"
           />
         </div>
-      </div>
-
-      <div className="flex flex-col gap-1.5">
-        <Label className="text-xs text-stone-600">Cliente</Label>
-        <Select
-          value={cliente}
-          onValueChange={(value) => setCliente(value ?? "livre")}
-        >
-          <SelectTrigger className="border-stone-300 bg-white">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="livre">Sem cliente (horário livre)</SelectItem>
-            {clientes.map((c) => (
-              <SelectItem key={c.id} value={String(c.id)}>
-                {c.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
       </div>
 
       {erro && <p className="text-xs font-medium text-orange-700">{erro}</p>}
