@@ -1,6 +1,6 @@
 import type { Cliente } from "@/types";
 
-export const HOJE = new Date(2026, 7, 8);
+export const HOJE = new Date();
 
 export function toISO(d: Date) {
   const y = d.getFullYear();
@@ -11,7 +11,9 @@ export function toISO(d: Date) {
 
 export function clienteNome(clientes: Cliente[], id: number | null) {
   if (id === null) return null;
-  return clientes.find((c) => c.id === id)?.name ?? "Cliente removido";
+  const cliente = clientes.find((c) => c.id === id);
+  if (!cliente) return "Cliente removido";
+  return `${cliente.nome} ${cliente.sobrenome}`;
 }
 
 export function getMonthGrid(mes: Date): Date[] {
