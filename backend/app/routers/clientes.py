@@ -26,10 +26,15 @@ def cadastrar_cliente(cliente: ClienteCreate):
     try:
         return criar_cliente(cliente)
 
-    except sqlite3.IntegrityError:
+    except sqlite3.IntegrityError as error:
+        if "clientes.telefone" in str(error):
+            detail = "Este telefone já foi cadastrado."
+        else:
+            detail = "Este CPF já foi cadastrado."
+
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail="Este CPF já foi cadastrado.",
+            detail=detail,
         )
 
 
@@ -49,10 +54,15 @@ def atualizar_cliente_route(cliente_id: int, cliente: ClienteUpdate):
     try:
         atualizado = atualizar_cliente(cliente_id, cliente)
 
-    except sqlite3.IntegrityError:
+    except sqlite3.IntegrityError as error:
+        if "clientes.telefone" in str(error):
+            detail = "Este telefone já foi cadastrado."
+        else:
+            detail = "Este CPF já foi cadastrado."
+
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail="Este CPF já foi cadastrado.",
+            detail=detail,
         )
 
     if atualizado is None:
