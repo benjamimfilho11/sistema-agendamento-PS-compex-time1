@@ -77,6 +77,7 @@ export default function HorarioListItem({
       </Badge>
     {ocupado && (
       <Button
+      title= "Cancelar horário"
         size="icon"
         variant="outline"
         className="h-8 w-8 shrink-0 border-stone-300 text-stone-500 hover:border-red-300 hover:bg-orange-50 hover:text-red-700"
@@ -87,6 +88,7 @@ export default function HorarioListItem({
         </Button>
     )}
       <Button
+        title= "Excluir horário"
         size="icon"
         variant="outline"
         className="h-8 w-8 shrink-0 border-stone-300 text-stone-500 hover:border-orange-300 hover:bg-orange-50 hover:text-orange-700"
