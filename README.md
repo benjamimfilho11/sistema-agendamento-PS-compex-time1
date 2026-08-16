@@ -1,7 +1,9 @@
 # Sistema de Agendamento — PS Compex Time 1
-Benjamim Pessoa Vale Filho
-Arthur Santos Santiago Ribeiro
-José Bernardo Alves Fortes
+Benjamim Pessoa Vale Filho.  
+
+Arthur Santos Santiago Ribeiro.  
+
+José Bernardo Alves Fortes.  
 
 Repositório de código do Sistema de Agendamento desenvolvido durante o Processo Seletivo da Compex Júnior.
 
