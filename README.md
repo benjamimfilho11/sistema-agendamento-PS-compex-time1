@@ -1,6 +1,6 @@
 # Sistema de Agendamento — PS Compex Time 1
 
-Repositório de código do Sistema de Agendamento desenvolvido pelo Time 1 durante o Processo Seletivo da Compex Júnior.
+Repositório de código do Sistema de Agendamento desenvolvido durante o Processo Seletivo da Compex Júnior.
 
 ## Sobre o projeto
 
