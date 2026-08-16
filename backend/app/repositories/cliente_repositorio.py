@@ -162,3 +162,4 @@ def buscar_cliente_por_id(cliente_id: int):
 
     finally:
         connection.close()
+
